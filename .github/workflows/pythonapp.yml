@@ -41,7 +41,8 @@ jobs:
       run: |
         pip install ".[dev]"
         sudo apt-get update
-        sudo apt-get install libssl-dev libcurl4-openssl-dev
+        sudo apt upgrade r-base
+        sudo apt-get install libssl-dev libcurl4-openssl-dev libxml2-dev
     - name: Test with nose
       run: |
         nosetests -s -v
@@ -57,6 +58,9 @@ jobs:
 
     - name: Set up reticulate with python 3.8
       run: |
+        install.packages("textshaping")
+        install.packages("ragg")
+        install.packages("pkgdown")
         install.packages("devtools")
         devtools::install_github(rstudio/reticulate)
         library(reticulate)
