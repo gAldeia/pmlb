@@ -58,11 +58,7 @@ jobs:
 
     - name: Set up reticulate with python 3.8
       run: |
-        install.packages("textshaping")
-        install.packages("ragg")
-        install.packages("pkgdown")
-        install.packages("devtools")
-        devtools::install_github(rstudio/reticulate)
+        install.packages("reticulate")
         library(reticulate)
         reticulate::install_miniconda()
         conda_create("python38", packages = c("python=3.8"))
