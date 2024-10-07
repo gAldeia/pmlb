@@ -53,15 +53,18 @@ jobs:
     - uses: r-lib/actions/setup-r@v2
     - uses: r-lib/actions/setup-pandoc@v2
     - name: Install R packages
-      run: Rscript -e 'install.packages(c("rmarkdown", "plotly", "dplyr", "htmlwidgets", "htmltools", "jsonlite", "readr", "DT", "remotes", "pmlbr"))'
+      run: Rscript -e 'install.packages(c("rmarkdown", "plotly", "dplyr", "htmlwidgets", "htmltools", "jsonlite", "readr", "DT", "remotes", "pmlbr", "tiff", "knitr"))'
 
-    - name: Set up reticulate
+    - name: Set up reticulate with python 3.8
       run: |
-        install.packages("reticulate")
+        install.packages("devtools")
+        devtools::install_github(rstudio/reticulate)
         library(reticulate)
         reticulate::install_miniconda()
-        reticulate::py_config()
-        reticulate::py_discover_config()
+        conda_create("python38", packages = c("python=3.8"))
+        use_condaenv("python38", required = TRUE)
+        py_config <- reticulate::py_config()
+        cat("Python version:", py_config$python_version, "\n")  
       shell: Rscript {0}
 
     - name: Build site

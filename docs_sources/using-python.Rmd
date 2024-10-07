@@ -7,7 +7,7 @@ library(reticulate)
 
 knitr::knit_engines$set(python = reticulate::eng_python)
 knitr::opts_knit$set(progress = TRUE, verbose = TRUE, highlight = TRUE)
-reticulate::py_install(c("matplotlib", "scikit-learn", "seaborn"))
+reticulate::py_install(c("pillow", "matplotlib", "scikit-learn", "seaborn"))
 reticulate::py_install("pmlb", pip = TRUE)
 
 ```
@@ -77,13 +77,17 @@ print(
 PMLB is designed to make it easy to benchmark machine learning algorithms against each other. Below is a Python code snippet showing the a sample comparison of two classification algorithms on the first 40 PMLB datasets.
 
 
+```{python plot}
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sb
+```
+
 ``` {python results='hide', message=FALSE, warning=FALSE, fig.keep = 'last'}
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
-
-import matplotlib.pyplot as plt
-import seaborn as sb
 
 from pmlb import fetch_data, classification_dataset_names
 
@@ -109,6 +113,9 @@ for classification_dataset in classification_dataset_names[:40]:
 
 ```{python}
 # Visualize the result:
+import matplotlib.pyplot as plt
+import seaborn as sb
+
 sb.boxplot(data=[logit_test_scores, gnb_test_scores], notch=True)
 plt.xticks([0, 1], ['LogisticRegression', 'GaussianNB'])
 plt.ylabel('Test Accuracy')
