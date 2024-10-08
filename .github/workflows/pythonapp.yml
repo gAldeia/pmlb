@@ -74,7 +74,6 @@ jobs:
         
     - name: Build site
       run: |
-        sudo ln -s /usr/lib/libtiff.so.5 /usr/lib/libtiff.so.6
         Rscript -e 'print(reticulate::py_discover_config())'
         Rscript -e 'rmarkdown::render_site(input = "docs_sources")'
 
