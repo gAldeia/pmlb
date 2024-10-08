@@ -11,7 +11,7 @@ output:
 
 ```{r setup, include=FALSE}
 library(reticulate)
-use_condaenv("python38", required = TRUE)
+use_condaenv("python311", required = TRUE)
 knitr::knit_engines$set(python = reticulate::eng_python)
 knitr::opts_knit$set(progress = TRUE, verbose = TRUE, highlight = TRUE)
 reticulate::py_install("pmlb", pip = TRUE)

@@ -8,8 +8,8 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache.lazy = FALSE)
 knitr::opts_knit$set(progress = TRUE, verbose = TRUE, highlight = TRUE)
 
 library(reticulate)
-reticulate::use_condaenv("python38", required = TRUE)
-reticulate::conda_install("python38", c("pylibtiff", "Pillow", "matplotlib", "scikit-learn", "seaborn"))
+reticulate::use_condaenv("python311", required = TRUE)
+reticulate::conda_install("python311", c("pylibtiff", "Pillow", "matplotlib", "scikit-learn", "seaborn"))
 reticulate::py_install("pmlb", pip = TRUE)
 
 ```

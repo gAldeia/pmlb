@@ -61,8 +61,8 @@ jobs:
         install.packages("reticulate")
         library(reticulate)
         reticulate::install_miniconda()
-        conda_create("python38", packages = c("python=3.8"))
-        use_condaenv("python38", required = TRUE)
+        conda_create("python311", packages = c("python=3.11"))
+        use_condaenv("python311", required = TRUE)
         py_config <- reticulate::py_config()
         cat("Python version:", py_config$python_version, "\n")  
       shell: Rscript {0}
