@@ -47,14 +47,6 @@ jobs:
       run: |
         nosetests -s -v
     
-    - name: Update R tiff package
-      run: Rscript -e 'install.packages("tiff")'
-      
-    - name: Verify libtiff installation
-      run: |
-        dpkg -l | grep libtiff
-        ldconfig -p | grep libtiff
-        
     - name: Generate profiling reports
       run: |
         python -m pmlb.profiling
@@ -75,6 +67,11 @@ jobs:
         cat("Python version:", py_config$python_version, "\n")  
       shell: Rscript {0}
 
+    - name: Verify libtiff installation
+      run: |
+        dpkg -l | grep libtiff
+        ldconfig -p | grep libtiff
+        
     - name: Build site
       run: |
         Rscript -e 'print(reticulate::py_discover_config())'
