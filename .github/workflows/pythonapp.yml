@@ -56,7 +56,7 @@ jobs:
     - name: Install R packages
       run: Rscript -e 'install.packages(c("rmarkdown", "plotly", "dplyr", "htmlwidgets", "htmltools", "jsonlite", "readr", "DT", "remotes", "pmlbr", "tiff", "knitr"))'
 
-    - name: Set up reticulate with python 3.8
+    - name: Set up reticulate with python 3.11
       run: |
         install.packages("reticulate")
         library(reticulate)

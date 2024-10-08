@@ -3,10 +3,6 @@ title: "Using PMLB Python interface"
 ---
 
 ```{r, include=FALSE}
-library(knitr)
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache.lazy = FALSE)
-knitr::opts_knit$set(progress = TRUE, verbose = TRUE, highlight = TRUE)
-
 library(reticulate)
 reticulate::use_condaenv("python311", required = TRUE)
 reticulate::conda_install("python311", c("pylibtiff", "Pillow", "matplotlib", "scikit-learn", "seaborn"))
@@ -32,7 +28,7 @@ $ pip install .
 
 ## Usage
 
-``` {python}
+```{python}
 from pmlb import fetch_data
 
 # Returns a pandas DataFrame
@@ -81,7 +77,6 @@ PMLB is designed to make it easy to benchmark machine learning algorithms agains
 
 ```{python}
 import matplotlib
-matplotlib.use('Agg')
 ```
 
 ```{python}
