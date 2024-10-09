@@ -28,9 +28,8 @@ jobs:
         
     - name: Create and activate Conda environment
       run: |
-        conda init
         conda create --name pmlb_env python=3.8 -y
-        conda activate pmlb_env
+        conda init
 
     - name: Create LFS file list
       run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
