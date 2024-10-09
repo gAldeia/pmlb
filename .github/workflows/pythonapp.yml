@@ -42,7 +42,18 @@ jobs:
         pip install ".[dev]"
         sudo apt-get update
         sudo apt upgrade r-base
-        sudo apt-get install libssl-dev libcurl4-openssl-dev libxml2-dev libjpeg-dev zlib1g-dev libpng-dev libtiff5 libtiff-tools libtiff-dev
+        sudo apt-get install -y \
+          libssl-dev \
+          libcurl4-openssl-dev \
+          libxml2-dev \
+          libjpeg-turbo-dev \
+          libpng-dev \
+          libtiff-dev \
+          zlib1g-dev \
+          libpng-dev \
+          libtiff-tools \
+          libtiff-dev
+
     - name: Test with nose
       run: |
         nosetests -s -v
