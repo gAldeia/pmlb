@@ -22,13 +22,13 @@ jobs:
 
     - name: Install Miniconda
       uses: conda-incubator/setup-miniconda@v2
-      run: conda init
       with:
         miniconda-version: 'latest'
         python-version: '3.8'
         
     - name: Create and activate Conda environment
       run: |
+        conda init
         conda create --name pmlb_env python=3.8 -y
         conda activate pmlb_env
 
