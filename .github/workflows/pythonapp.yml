@@ -25,8 +25,8 @@ jobs:
       with:
         miniconda-version: 'latest'
         python-version: '3.8'
-    -
-     name: Create and activate Conda environment
+        
+    - name: Create and activate Conda environment
       run: |
         conda create --name pmlb_env python=3.8 -y
         conda activate pmlb_env
