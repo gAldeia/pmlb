@@ -22,6 +22,7 @@ jobs:
 
     - name: Install Miniconda
       uses: conda-incubator/setup-miniconda@v2
+      run: conda init
       with:
         miniconda-version: 'latest'
         python-version: '3.8'
