@@ -20,6 +20,17 @@ jobs:
         fetch-depth: 0
         # lfs: true
 
+    - name: Install Miniconda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        miniconda-version: 'latest'
+        python-version: '3.8'
+    -
+     name: Create and activate Conda environment
+      run: |
+        conda create --name pmlb_env python=3.8 -y
+        conda activate pmlb_env
+
     - name: Create LFS file list
       run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
@@ -46,8 +57,6 @@ jobs:
           libssl-dev \
           libcurl4-openssl-dev \
           libxml2-dev \
-          libjpeg-turbo-dev \
-          libpng-dev \
           libtiff-dev \
           zlib1g-dev \
           libpng-dev \
@@ -67,13 +76,11 @@ jobs:
     - name: Install R packages
       run: Rscript -e 'install.packages(c("rmarkdown", "plotly", "dplyr", "htmlwidgets", "htmltools", "jsonlite", "readr", "DT", "remotes", "pmlbr", "tiff", "knitr"))'
 
-    - name: Set up reticulate with python 3.11
+    - name: Set up reticulate with python
       run: |
         install.packages("reticulate")
         library(reticulate)
-        reticulate::install_miniconda()
-        conda_create("python311", packages = c("python=3.11"))
-        use_condaenv("python311", required = TRUE)
+        use_condaenv("pmlb_env", required = TRUE)
         py_config <- reticulate::py_config()
         cat("Python version:", py_config$python_version, "\n")  
       shell: Rscript {0}
