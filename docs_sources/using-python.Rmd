@@ -74,16 +74,6 @@ print(
 
 PMLB is designed to make it easy to benchmark machine learning algorithms against each other. Below is a Python code snippet showing the a sample comparison of two classification algorithms on the first 40 PMLB datasets.
 
-
-```{python}
-import matplotlib
-```
-
-```{python}
-import matplotlib.pyplot as plt
-import seaborn as sb
-```
-
 ``` {python results='hide', message=FALSE, warning=FALSE, fig.keep = 'last'}
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
@@ -109,17 +99,4 @@ for classification_dataset in classification_dataset_names[:40]:
     # Log the performance score on the test set
     logit_test_scores.append(logit.score(test_X, test_y))
     gnb_test_scores.append(gnb.score(test_X, test_y))
-```
-
-```{python plot}
-# Visualize the result:
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import seaborn as sb
-
-sb.boxplot(data=[logit_test_scores, gnb_test_scores], notch=True)
-plt.xticks([0, 1], ['LogisticRegression', 'GaussianNB'])
-plt.ylabel('Test Accuracy')
-plt.show()
 ```
