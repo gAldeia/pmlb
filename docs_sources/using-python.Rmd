@@ -4,8 +4,8 @@ title: "Using PMLB Python interface"
 
 ```{r, include=FALSE}
 library(reticulate)
-reticulate::use_condaenv("python311", required = TRUE)
-reticulate::conda_install("python311", c("pylibtiff", "Pillow", "matplotlib", "scikit-learn", "seaborn"))
+reticulate::use_condaenv("pmlb_env", required = TRUE)
+reticulate::conda_install("pmlb_env", c("pylibtiff", "Pillow", "matplotlib", "scikit-learn", "seaborn"))
 reticulate::py_install("pmlb", pip = TRUE)
 
 ```
