@@ -5,7 +5,7 @@ title: "Using PMLB Python interface"
 ```{r, include=FALSE}
 library(reticulate)
 reticulate::use_condaenv("pmlb_env", required = TRUE)
-reticulate::conda_install("pmlb_env", c("pylibtiff", "Pillow", "matplotlib==3.3", "scikit-learn", "seaborn"))
+reticulate::conda_install("pmlb_env", c("PyQt5", "matplotlib", "scikit-learn", "seaborn"))
 reticulate::py_install("pmlb", pip = TRUE)
 
 ```
@@ -46,7 +46,7 @@ The `fetch_data` function has two additional parameters:
 
 For example:
 
-``` {python}
+```{python}
 from pmlb import fetch_data
 
 # Returns NumPy arrays
@@ -57,7 +57,7 @@ mush_y.shape
 
 You can also list the available datasets as follows:
 
-``` {python}
+```{python}
 import random
 from pmlb import dataset_names, classification_dataset_names, regression_dataset_names
 
@@ -99,4 +99,15 @@ for classification_dataset in classification_dataset_names[:40]:
     # Log the performance score on the test set
     logit_test_scores.append(logit.score(test_X, test_y))
     gnb_test_scores.append(gnb.score(test_X, test_y))
+```
+
+```{python}
+# Visualize the result:
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.boxplot(data=[logit_test_scores, gnb_test_scores], notch=True)
+plt.xticks([0, 1], ['LogisticRegression', 'GaussianNB'])
+plt.ylabel('Test Accuracy')
+plt.show()
 ```
