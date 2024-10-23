@@ -11,7 +11,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout code
@@ -19,6 +19,17 @@ jobs:
       with:
         fetch-depth: 0
         # lfs: true
+
+    - name: Install Miniconda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        miniconda-version: 'latest'
+        python-version: '3.8'
+        
+    - name: Create and activate Conda environment
+      run: |
+        conda create --name pmlb_env python=3.8 -y
+        conda init
 
     - name: Create LFS file list
       run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -41,11 +52,21 @@ jobs:
       run: |
         pip install ".[dev]"
         sudo apt-get update
-        sudo apt-get install libssl-dev libcurl4-openssl-dev
+        sudo apt upgrade r-base
+        sudo apt-get install -y \
+          libssl-dev \
+          libcurl4-openssl-dev \
+          libxml2-dev \
+          libtiff-dev \
+          zlib1g-dev \
+          libpng-dev \
+          libtiff-tools \
+          libtiff-dev \
+          python3-tk 
     - name: Test with nose
       run: |
         nosetests -s -v
-
+    
     - name: Generate profiling reports
       run: |
         python -m pmlb.profiling
@@ -53,19 +74,25 @@ jobs:
     - uses: r-lib/actions/setup-r@v2
     - uses: r-lib/actions/setup-pandoc@v2
     - name: Install R packages
-      run: Rscript -e 'install.packages(c("rmarkdown", "plotly", "dplyr", "htmlwidgets", "htmltools", "jsonlite", "readr", "DT", "remotes", "pmlbr"))'
+      run: Rscript -e 'install.packages(c("rmarkdown", "plotly", "dplyr", "htmlwidgets", "htmltools", "jsonlite", "readr", "DT", "remotes", "pmlbr", "tiff", "knitr"))'
 
-    - name: Set up reticulate
+    - name: Set up reticulate with python
       run: |
         install.packages("reticulate")
         library(reticulate)
-        reticulate::install_miniconda()
-        reticulate::py_config()
-        reticulate::py_discover_config()
+        use_condaenv("pmlb_env", required = TRUE)
+        py_config <- reticulate::py_config()
+        cat("Python version:", py_config$python_version, "\n")  
       shell: Rscript {0}
 
+    - name: Verify libtiff installation
+      run: |
+        dpkg -l | grep libtiff
+        ldconfig -p | grep libtiff
+        
     - name: Build site
       run: |
+        export MPLBACKEND=TkAgg
         Rscript -e 'print(reticulate::py_discover_config())'
         Rscript -e 'rmarkdown::render_site(input = "docs_sources")'
 

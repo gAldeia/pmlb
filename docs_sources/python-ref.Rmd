@@ -8,12 +8,12 @@ output:
       collapsed: false
     css: custom.css
 ---
+
 ```{r setup, include=FALSE}
 library(reticulate)
-
+use_condaenv("pmlb_env", required = TRUE)
 knitr::knit_engines$set(python = reticulate::eng_python)
 knitr::opts_knit$set(progress = TRUE, verbose = TRUE, highlight = TRUE)
-reticulate::py_install(c("matplotlib", "scikit-learn", "seaborn"))
 reticulate::py_install("pmlb", pip = TRUE)
 
 ```

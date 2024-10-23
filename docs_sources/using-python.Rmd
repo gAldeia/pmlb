@@ -2,12 +2,10 @@
 title: "Using PMLB Python interface"
 ---
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 library(reticulate)
-
-knitr::knit_engines$set(python = reticulate::eng_python)
-knitr::opts_knit$set(progress = TRUE, verbose = TRUE, highlight = TRUE)
-reticulate::py_install(c("matplotlib", "scikit-learn", "seaborn"))
+reticulate::use_condaenv("pmlb_env", required = TRUE)
+reticulate::conda_install("pmlb_env", c("matplotlib", "scikit-learn", "seaborn"))
 reticulate::py_install("pmlb", pip = TRUE)
 
 ```
@@ -30,7 +28,7 @@ $ pip install .
 
 ## Usage
 
-``` {python}
+```{python}
 from pmlb import fetch_data
 
 # Returns a pandas DataFrame
@@ -48,7 +46,7 @@ The `fetch_data` function has two additional parameters:
 
 For example:
 
-``` {python}
+```{python}
 from pmlb import fetch_data
 
 # Returns NumPy arrays
@@ -59,7 +57,7 @@ mush_y.shape
 
 You can also list the available datasets as follows:
 
-``` {python}
+```{python}
 import random
 from pmlb import dataset_names, classification_dataset_names, regression_dataset_names
 
@@ -76,14 +74,10 @@ print(
 
 PMLB is designed to make it easy to benchmark machine learning algorithms against each other. Below is a Python code snippet showing the a sample comparison of two classification algorithms on the first 40 PMLB datasets.
 
-
 ``` {python results='hide', message=FALSE, warning=FALSE, fig.keep = 'last'}
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
-
-import matplotlib.pyplot as plt
-import seaborn as sb
 
 from pmlb import fetch_data, classification_dataset_names
 
@@ -109,7 +103,11 @@ for classification_dataset in classification_dataset_names[:40]:
 
 ```{python}
 # Visualize the result:
-sb.boxplot(data=[logit_test_scores, gnb_test_scores], notch=True)
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.boxplot(data=[logit_test_scores, gnb_test_scores], notch=True)
 plt.xticks([0, 1], ['LogisticRegression', 'GaussianNB'])
 plt.ylabel('Test Accuracy')
+plt.show()
 ```
