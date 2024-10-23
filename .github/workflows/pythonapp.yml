@@ -61,8 +61,8 @@ jobs:
           zlib1g-dev \
           libpng-dev \
           libtiff-tools \
-          libtiff-dev
-
+          libtiff-dev \
+          python3-tk 
     - name: Test with nose
       run: |
         nosetests -s -v
@@ -92,6 +92,7 @@ jobs:
         
     - name: Build site
       run: |
+        export MPLBACKEND=TkAgg
         Rscript -e 'print(reticulate::py_discover_config())'
         Rscript -e 'rmarkdown::render_site(input = "docs_sources")'
 
